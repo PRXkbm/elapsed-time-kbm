@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elapsed Time</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #0b0b0f;
+        color: white;
+        font-family: Arial, "Noto Sans KR", sans-serif;
+    }
+
+    .container {
+        text-align: center;
+        padding: 40px;
+    }
+
+    .title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 35px;
+    }
+
+    .start-label,
+    .elapsed-label {
+        color: #999;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+
+    .start-time {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 45px;
+    }
+
+    .elapsed {
+        font-size: 42px;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .unit {
+        font-size: 18px;
+        color: #aaa;
+        margin-top: 12px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="title">경과 시간</div>
+
+    <div class="start-label">시작된 시간</div>
+    <div class="start-time">2026/10/03 오후 1:30</div>
+
+    <div class="elapsed-label">지난 시간</div>
+    <div class="elapsed" id="elapsed">계산 중...</div>
+    <div class="unit">일 · 시간 · 분 · 초</div>
+
+</div>
+
+<script>
+    // 시작 시간: 2026년 10월 3일 오후 1시 30분
+    const startTime = new Date(2026, 9, 3, 13, 30, 0);
+
+    function updateElapsed() {
+        const now = new Date();
+        let difference = now - startTime;
+
+        if (difference < 0) {
+            document.getElementById("elapsed").textContent = "아직 시작되지 않았습니다.";
+            return;
+        }
+
+        const seconds = Math.floor(difference / 1000);
+
+        const days = Math.floor(seconds / 86400);
+        const hours = Math.floor((seconds % 86400) / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = seconds % 60;
+
+        document.getElementById("elapsed").textContent =
+            `${days}일 ${hours}시간 ${minutes}분 ${secs}초`;
+    }
+
+    updateElapsed();
+    setInterval(updateElapsed, 1000);
+</script>
+
+</body>
+</html>
